@@ -1,0 +1,97 @@
+html
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Simple Note Taker</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f4f4f4;
+  }
+  h1 {
+    text-align: center;
+  }
+  #noteInput {
+    width: 80%;
+    padding: 10px;
+    margin-right: 10px;
+        border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  #addBtn {
+    padding: 10px 20px;
+    border: none;
+    background-color: #4285f4;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  #addBtn:hover {
+    background-color: #357ae8;
+  }
+  #notes {
+    margin-top: 20px;
+  }
+  .note {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+  }
+  .deleteBtn {
+    float: right;
+    background: none;
+    border: none;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>Simple Note Taker</h1>
+<div style="text-align: center;">
+  <input type="text" id="noteInput" placeholder="Enter your note here" />
+  <button id="addBtn">Add Note</button>
+</div>
+<div id="notes"></div>
+
+<script>
+  const addBtn = document.getElementById('addBtn');
+  const noteInput = document.getElementById('noteInput');
+  const notesDiv = document.getElementById('notes');
+
+  addBtn.onclick = () => {
+    const noteText = noteInput.value.trim();
+    if (noteText) {
+      const noteDiv = document.createElement('div');
+      noteDiv.className = 'note';
+      noteDiv.innerHTML = `
+        <button class="deleteBtn">&times;</button>
+        ${noteText}
+      `;
+      notesDiv.appendChild(noteDiv);
+      noteInput.value = '';
+
+      // Add delete functionality
+      noteDiv.querySelector('.deleteBtn').onclick = () => {
+        notesDiv.removeChild(noteDiv);
+      };
+    }
+  };
+
+  // Allow pressing Enter to add note
+  noteInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      addBtn.click();
+    }
+  });
+</script>
+
+</body>
+</html>
